@@ -8,6 +8,7 @@ from ps_utils import get_credentials
 
 
 class TimescaleDB(object):
+    """TimescaleDB connection class for PostgreSQL Timeseries instance"""
     def __init__(self, config_tag):
         """create connection to Timescale DB ..."""
         # choose the database to use
@@ -39,6 +40,7 @@ class TimescaleDB(object):
             logging.debug(masked_login_string)
 
     def validate_db_connect(self):
+        """test if connected, reconnect if needed, seamlessly"""
         if self.engine is None:
             # reopen sqlalchemy engine
             self.engine = create_engine(self.engine_string)
