@@ -5,6 +5,7 @@ import logging
 from ps_logger import setup_logger
 from TimescaleDB import TimescaleDB
 from DB2 import DB2
+from Measure import measure
 from ps_utils import get_credentials
 
 def main(tsdb_config_tag, db2_config_tag, max_records):
@@ -20,10 +21,25 @@ def main(tsdb_config_tag, db2_config_tag, max_records):
     number_of_fetches=5
     base_record=0
 
+    # we are going to pull in bytecode on the fly ... hang on little bobby tables!
+    #eval(open('./Measures/measure1.defaults').read())
+    measure_dict = {}
+    measure_dict['__CLAIMS_TABLE__'] = 'claims'
+    measure_dict['__METRICS__'] = 'metrics'
+    measure_dict['__EFFECTIVE_DATE__'] = "'2020-01-01'" # gotta love py strings!
+
+    measure_sql = measure("./Measures/measure1.template", measure_dict)
+
+    testing_measures = True
+
     while number_of_fetches > 0 :
-        sql_string = 'SELECT * FROM claims  LIMIT {max_records} OFFSET {base_record};'.format(
-                                            max_records=max_records,
-                                            base_record=base_record)
+        if testing_measures:
+            sql_string = measure_sql
+        else:
+            sql_string = 'SELECT * FROM claims  LIMIT {max_records} OFFSET {base_record};'.format(
+                                                max_records=max_records,
+                                                base_record=base_record)
+
         logging.debug("SQL: [{}]".format(sql_string))
         timescale_db.validate_db_connect()
         records = timescale_db.execute(sql_string)

@@ -1,0 +1,10 @@
+select {__METRICS__}.PHARMACY_NPI_ID
+,{__METRICS__}.Acceptable_Value
+,{__METRICS__}.Calculated_Value
+,{__METRICS__}.Total_Dollar_Amount
+,{__CLAIMS_TABLE__}.CUSTOMER_ID
+,{__CLAIMS_TABLE__}.CLAIM_ID
+from Pharmacy_Calculated_Metrics     {__METRICS__}
+inner join CLAIMS_MASTER             {__CLAIMS_TABLE__}
+on {__METRICS__}.PHARMACY_NPI_ID = {__CLAIMS_TABLE__}.PHARMACY_NPI_ID
+where date(CLAIM_ADD_TMSP) = ( date {__EFFECTIVE_DATE__} - INTERVAL '1 DAY' ) and CUSTOMER_ID = 320 ;
