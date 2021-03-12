@@ -5,24 +5,28 @@ import logging
 from ps_logger import setup_logger
 from TimescaleDB import TimescaleDB
 
+
 def main(config_tag, base_record, max_records, number_of_fetches):
     """using credentials from config_tag, starting at record:#base_record, get: #max_records, return data_set"""
 
     timescale_db = TimescaleDB(config_tag)
 
-    while number_of_fetches > 0 :
+    while number_of_fetches > 0:
         sql_string = 'SELECT * FROM claims  LIMIT {} OFFSET {};'.format(
             max_records,
             base_record)
         logging.info("SQL: [{}]".format(sql_string))
-        timescale_db.validate_db_connect()
-        records = timescale_db.execute(sql_string)
+        try:
+            timescale_db.validate_db_connect()
+            records = timescale_db.execute(sql_string)
+        except Exception as ex:
+            logging.info("Exception from TS_DB execute [{}] sql".format(sql_string))
+            raise ex
+
         for record in records:
             print(record)
         base_record = base_record + max_records
         number_of_fetches -= 1
-
-
 
 
 # possible arguments to use
@@ -37,7 +41,8 @@ if __name__ == '__main__':
     parser.add_argument('--config_tag', action='store', dest='config_tag', type=str, help='config_tag')
     parser.add_argument('--base_record', action='store', dest='base_record', type=int, help='base_record')
     parser.add_argument('--max_records', action='store', dest='max_records', type=int, help='max_records')
-    parser.add_argument('--number_of_fetches', action='store', dest='number_of_fetches', type=int, help='number_of_fetches')
+    parser.add_argument('--number_of_fetches', action='store', dest='number_of_fetches', type=int,
+                        help='number_of_fetches')
 
     parser.add_argument('--log_level', action='store', dest='log_level', type=int,
                         default=logging.INFO, help='log_level (int value)')
@@ -62,4 +67,3 @@ if __name__ == '__main__':
     except (Exception, EOFError) as ex:
         logging.exception("uh, oh .... we got an exception!!")
         raise
-

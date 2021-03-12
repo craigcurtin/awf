@@ -8,7 +8,7 @@ def get_credentials(section_name, db_config_file_name=None):
     """get_credentials for PostgreSQL/Timeseries database"""
     config = ConfigParser()
 
-    if None == db_config_file_name:
+    if db_config_file_name is None:
         db_config_file_name = ".pg_service.conf"
 
     # Note: ${HOME}/.pg_service.conf ... if DB2

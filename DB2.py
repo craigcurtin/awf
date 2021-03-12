@@ -2,6 +2,7 @@ import logging
 import pandas as pd
 from ps_utils import get_credentials
 
+
 # import ibm_db
 
 # gouged this class from @Jay Ko ... thanks dude!
@@ -24,23 +25,25 @@ class DB2(object):
 
     def ibm_connect(self):
         try:
+            # TODO : once we get the ibm_db package deployable ... we'll make below executable.
             if False:
                 self.ibm_conn = ibm_db.connect(
                     "DATABASE={database};HOSTNAME={hostname};PORT={port};PROTOCOL={protocol};UID={uid};PWD={pw}".format(
-                        database=self.dbdsn, hostname=self.configuration_dict["DBHostName"], port=self.configuration_dict["Port"],
+                        database=self.dbdsn, hostname=self.configuration_dict["DBHostName"],
+                        port=self.configuration_dict["Port"],
                         protocol=self.configuration_dict["Protocol"], uid=self.uid, pw=self.pw
                     ), "", ""
                 )
                 return self.ibm_conn
             else:
                 log_db2_conn = "DB2: DATABASE={database};HOSTNAME={hostname};PORT={port};PROTOCOL={protocol};UID={uid};PWD={pw}".format(
-                                    database=self.dbname,
-                                    hostname="may_the_force_be_with_you",
-                                    port="8675309",
-                                    protocol=self.protocol,
-                                    uid="some luser",
-                                    pw="ain't gonna tell",
-                    )
+                    database=self.dbname,
+                    hostname="may_the_force_be_with_you",
+                    port="8675309",
+                    protocol=self.protocol,
+                    uid="some luser",
+                    pw="ain't gonna tell",
+                )
                 logging.info(log_db2_conn)
         except Exception as ex:
             logging.exception("Exception: {} cannot connect to {}".format(ex, self.dbname))
@@ -71,8 +74,8 @@ class DB2(object):
     # This will be implemented in data_table
     def execute(self, sql):
         try:
-            sql_query = pd.read_sql_query(sql,self.conn)
-            #self.cursor.execute(sql)
+            sql_query = pd.read_sql_query(sql, self.conn)
+            # self.cursor.execute(sql)
             logging.debug("Executing SQL Query")
             return sql_query
         except Exception as ex:
@@ -107,7 +110,7 @@ class DB2(object):
     def upsert(self, inssql, updsql):
         try:
             self.cursor.execute(inssql)
-            logging.debug(("Executing Insert in upsert mode"))
+            logging.debug("Executing Insert in upsert mode")
         except Exception as ex:
             if ex.args[0] == '23505':
                 try:
@@ -130,7 +133,6 @@ class DB2(object):
             ex_message = "Exception: {} cannot Commit Records".format(ex)
             logging.exception(ex_message)
             raise RuntimeError(ex_message) from ex
-
 
     def close_conn(self):
         try:
