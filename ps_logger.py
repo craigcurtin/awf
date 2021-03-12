@@ -2,6 +2,7 @@ import sys
 import logging
 from pytz import timezone
 from datetime import datetime
+from pathlib import Path
 
 # *force* UTC based time in log messages
 tz = timezone('UTC')
@@ -18,7 +19,10 @@ def setup_logger(app_name, log_level):
     """configure logger with UTC timestamp, bunch of default values"""
     # Setting up logger
     # log_levels: NOTSET=0, DEBUG=10, INFO=20, WARN=30, ERROR=40, and CRITICAL=50
-    log_file_name = '{}.log'.format(app_name)
+    # TODO - on linux we want /var/log ... error on MacOs ... protected directory
+    #log_file_name = Path('/var/log/{}.log'.format(app_name))
+    log_file_name = Path('./{}.log'.format(app_name))
+
     short_file_format = "%(asctime)s:%(levelname)s:%(message)s"
     long_file_format = "%(asctime)s %(HOST)s %(AppId)d %(AppVersion)s %(levelname)s %(name)s %(message)s %(filename)s %(funcName)s %(levelname)s %(lineno)d %(message)s %(module)s %(msecs)d %(name)s %(pathname)s %(process)d %(processName)s %(relativeCreated)d %(thread)d %(threadName)s %(uid)"
     long_file_format = "%(asctime)s %(levelname)s %(name)s %(message)s %(filename)s %(funcName)s %(levelname)s %(lineno)d %(message)s %(module)s %(msecs)d %(name)s %(pathname)s %(process)d %(processName)s %(relativeCreated)d %(thread)d %(threadName)s"
