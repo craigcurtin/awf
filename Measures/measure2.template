@@ -1,0 +1,10 @@
+select PHARMACY_NPI_ID, count(CLAIM_ID)  as All_Clms
+,sum(case when CLAIM_STATUS_CD = 'D'
+          then 1
+          else 0 end)                    as Denied_Clms
+,sum(case when CLAIM_STATUS_CD = 'P'
+          then TOTAL_PLAN_PAID_AT
+          else 0 end)                    as Total_Dollar_Amount
+from CLAIMS_MASTER
+where date(CLAIM_ADD_TMSP) = (current date - 1 day) and  CUSTOMER_ID = 320
+group by PHARMACY_NPI_ID
