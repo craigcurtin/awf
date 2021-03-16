@@ -68,12 +68,15 @@ if __name__ == '__main__':
     parser.add_argument('--db2_config_tag', action='store', dest='db2_config_tag', type=str, help='config_tag')
 
     parser.add_argument('--max_records', action='store', dest='max_records', type=int, help='max_records')
+    parser.add_argument('--log_directory', action='store', dest='log_directory', type=str,
+                        default='./', help='log_directory (str value)')
 
     parser.add_argument('--log_level', action='store', dest='log_level', type=int,
                         default=logging.DEBUG, help='log_level (int value)')
 
     args = parser.parse_args()
-
+    if args.log_directory is None:
+        args.log_directory = './'
     if args.db2_config_tag is None:
         args.db2_config_tag = 'dbt_repts'
     if args.tsdb_config_tag is None:
@@ -81,7 +84,7 @@ if __name__ == '__main__':
     if args.max_records is None:
         args.max_records = 50
 
-    setup_logger(app_name, args.log_level)
+    setup_logger(app_name, args.log_directory, args.log_level)
 
     try:
         main(args.tsdb_config_tag, args.db2_config_tag, args.max_records)

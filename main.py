@@ -34,6 +34,7 @@ def main(config_tag, base_record, max_records, number_of_fetches):
 # --config_tag fwa --base_record 42 --max_records 1000
 # --number_of_fetches 5
 # --config_tag fwa --base_record 42 --max_records 10000 --log_level INFO
+# --config_tag fwa --base_record 42 --max_records 10000 --log_directory /tmp --log_level INFO
 
 if __name__ == '__main__':
     app_name = 'TimescaleDB'
@@ -43,12 +44,16 @@ if __name__ == '__main__':
     parser.add_argument('--max_records', action='store', dest='max_records', type=int, help='max_records')
     parser.add_argument('--number_of_fetches', action='store', dest='number_of_fetches', type=int,
                         help='number_of_fetches')
+    parser.add_argument('--log_directory', action='store', dest='log_directory', type=int,
+                        default='./', help='log_directory (str value)')
 
     parser.add_argument('--log_level', action='store', dest='log_level', type=int,
                         default=logging.INFO, help='log_level (int value)')
 
     args = parser.parse_args()
 
+    if args.log_directory is None:
+        args.log_directory = './'
     if args.config_tag is None:
         args.config_tag = 'fwa'
     if args.base_record is None:
@@ -58,7 +63,7 @@ if __name__ == '__main__':
     if args.number_of_fetches is None:
         args.number_of_fetches = 10
 
-    setup_logger(app_name, args.log_level)
+    setup_logger(app_name, args.log_directory, .log_level)
 
     try:
         main(args.config_tag, args.base_record, args.max_records, args.number_of_fetches)
