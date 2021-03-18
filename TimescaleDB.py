@@ -73,7 +73,8 @@ class TimescaleDB(object):
 
 
 if __name__ == '__main__':
-    setup_logger('Timescale_DB', logging.DEBUG)
+    log_directory = './'
+    setup_logger('Timescale_DB', log_directory, logging.DEBUG)
     config_tag = 'fwa'
     timescale_db = TimescaleDB(config_tag)
 

@@ -63,7 +63,7 @@ if __name__ == '__main__':
     if args.number_of_fetches is None:
         args.number_of_fetches = 10
 
-    setup_logger(app_name, args.log_directory, .log_level)
+    setup_logger(app_name, args.log_directory, args.log_level)
 
     try:
         main(args.config_tag, args.base_record, args.max_records, args.number_of_fetches)

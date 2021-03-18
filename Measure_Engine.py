@@ -6,6 +6,8 @@ from ps_logger import setup_logger
 from TimescaleDB import TimescaleDB
 from DB2 import DB2
 from Measure import measure
+from Measure_dicts import Measure1, Measure2
+
 from collections import defaultdict
 from ps_utils import get_credentials
 
@@ -25,6 +27,7 @@ def main(tsdb_config_tag, db2_config_tag, max_records):
 
     # we are going to pull in bytecode on the fly ... hang on little bobby tables!
     # eval(open('./Measures/measure1.defaults').read())
+    #kxmeasure1 = Measure1()
     measure_dict = {}
     measure_dict['__CLAIMS_TABLE__'] = 'claims'
     measure_dict['__METRICS__'] = 'metrics'
@@ -69,14 +72,13 @@ if __name__ == '__main__':
 
     parser.add_argument('--max_records', action='store', dest='max_records', type=int, help='max_records')
     parser.add_argument('--log_directory', action='store', dest='log_directory', type=str,
-                        default='./', help='log_directory (str value)')
+                        default='/var/log/PS_App', help='log_directory (str value)')
 
     parser.add_argument('--log_level', action='store', dest='log_level', type=int,
                         default=logging.DEBUG, help='log_level (int value)')
 
     args = parser.parse_args()
-    if args.log_directory is None:
-        args.log_directory = './'
+
     if args.db2_config_tag is None:
         args.db2_config_tag = 'dbt_repts'
     if args.tsdb_config_tag is None:
