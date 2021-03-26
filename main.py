@@ -12,7 +12,7 @@ def main(config_tag, base_record, max_records, number_of_fetches):
     timescale_db = TimescaleDB(config_tag)
 
     while number_of_fetches > 0:
-        sql_string = 'SELECT * FROM claims  LIMIT {} OFFSET {};'.format(
+        sql_string = 'SELECT * from public.fw9   LIMIT {} OFFSET {};'.format(
             max_records,
             base_record)
         logging.info("SQL: [{}]".format(sql_string))
@@ -44,11 +44,11 @@ if __name__ == '__main__':
     parser.add_argument('--max_records', action='store', dest='max_records', type=int, help='max_records')
     parser.add_argument('--number_of_fetches', action='store', dest='number_of_fetches', type=int,
                         help='number_of_fetches')
-    parser.add_argument('--log_directory', action='store', dest='log_directory', type=int,
+    parser.add_argument('--log_directory', action='store', dest='log_directory', type=str,
                         default='./', help='log_directory (str value)')
 
     parser.add_argument('--log_level', action='store', dest='log_level', type=int,
-                        default=logging.INFO, help='log_level (int value)')
+                        default=logging.DEBUG, help='log_level (int value)')
 
     args = parser.parse_args()
 

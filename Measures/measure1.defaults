@@ -1,4 +1,5 @@
     measure_dict = {}
-    measure_dict['__CLAIMS_TABLE__'] = 'claims'
+    measure_dict['__XCLAIMS_TABLE__'] = 'claims'
+    measure_dict['__CLAIMS_TABLE__'] = 'FW7'
     measure_dict['__METRICS__'] = 'metrics'
     measure_dict['__EFFECTIVE_DATE__'] = "'2020-01-01'" # gotta love py strings!
