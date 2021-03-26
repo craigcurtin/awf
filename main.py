@@ -38,7 +38,6 @@ def main(config_tag, base_record, max_records, number_of_fetches):
 
 if __name__ == '__main__':
     app_name = 'TimescaleDB'
-    print("hi ")
     parser = argparse.ArgumentParser(description=app_name)
     parser.add_argument('--config_tag', action='store', dest='config_tag', type=str, help='config_tag')
     parser.add_argument('--base_record', action='store', dest='base_record', type=int, help='base_record')
@@ -50,9 +49,8 @@ if __name__ == '__main__':
 
     parser.add_argument('--log_level', action='store', dest='log_level', type=int,
                         default=logging.DEBUG, help='log_level (int value)')
-    print("hi befdore ")
+
     args = parser.parse_args()
-    print("hi befdore ")
     if args.log_directory is None:
         args.log_directory = './'
     if args.config_tag is None:
@@ -65,7 +63,7 @@ if __name__ == '__main__':
         args.number_of_fetches = 10
     if args.log_level is None:
         args.log_level = logging.DEBUG
-    print("hi befdore ")
+    print("hi before 68")
     setup_logger(app_name, args.log_directory, args.log_level)
 
     try:
