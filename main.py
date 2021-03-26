@@ -62,6 +62,8 @@ if __name__ == '__main__':
         args.max_records = 50
     if args.number_of_fetches is None:
         args.number_of_fetches = 10
+    if args.log_level is None:
+        args.log_level = logging.DEBUG
 
     setup_logger(app_name, args.log_directory, args.log_level)
 
