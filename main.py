@@ -63,7 +63,7 @@ if __name__ == '__main__':
         args.number_of_fetches = 10
     if args.log_level is None:
         args.log_level = logging.DEBUG
-    print("hi before 68")
+
     setup_logger(app_name, args.log_directory, args.log_level)
 
     try:
