@@ -8,4 +8,5 @@ RUN pip install -r requirements.txt --index-url https://artifacts-scm.dstcorp.ne
 
 ENTRYPOINT ["python","main.py" ]
 
-CMD [ "python",  "main.py", "--config_tag",  "fwa",  "--base_record", "42",  "--max_records", "10000",  "--log_directory", "/tmp" ]
+# CMD [ "python",  "main.py", "--config_tag",  "fwa",  "--base_record", "42",  "--max_records", "10000",  "--log_directory", "/tmp" ]
+CMD [ "python",  "main.py", "--config_tag",  "fwa"  ]
