@@ -12,7 +12,7 @@ def main(config_tag, base_record, max_records, number_of_fetches):
     timescale_db = TimescaleDB(config_tag)
 
     while number_of_fetches > 0:
-        sql_string = 'SELECT * from public.fw9   LIMIT {} OFFSET {};'.format(
+        sql_string = 'SELECT * from argdr1.fw9   LIMIT {} OFFSET {};'.format(
             max_records,
             base_record)
         logging.info("SQL: [{}]".format(sql_string))
