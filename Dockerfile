@@ -4,7 +4,7 @@ COPY . /app
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt --index-url https://artifacts-scm.dstcorp.net/artifactory/api/pypi/pypi-repos/simple
+RUN pip install -r requirements.txt 
 
 ENTRYPOINT ["python","main.py" ]
 
